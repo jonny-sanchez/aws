@@ -1,0 +1,52 @@
+groups:
+  DevOps:
+    description: "nClouds DevOps Team"
+
+permission_sets:
+  AWSAdministratorAccess:
+    aws_managed_policies:
+      - arn:aws:iam::aws:policy/AdministratorAccess
+    description: Provides full access to AWS services and resources
+    session_duration: PT8H
+
+account_assignments:
+
+  164885464039: # corporacion_alisa_administration@nclouds.com
+    - group: DevOps
+      permission_set: AWSAdministratorAccess
+  '012874738755': # administracion_aws+logarchive@grupopinulito.com
+    - group: DevOps
+      permission_set: AWSAdministratorAccess
+  649419331163: # administracion_aws+audit@grupopinulito.com
+    - group: DevOps
+      permission_set: AWSAdministratorAccess
+  203194050383: # administracion_aws@grupopinulito.com
+    - group: DevOps
+      permission_set: AWSAdministratorAccess
+  823613469731: # administracion_aws+network@grupopinulito.com
+    - group: DevOps
+      permission_set: AWSAdministratorAccess
+  668353540121: # administracion_aws+shared@grupopinulito.com
+    - group: DevOps
+      permission_set: AWSAdministratorAccess
+  985384755074: # administracion_aws+pinuprod@grupopinulito.com
+    - group: DevOps
+      permission_set: AWSAdministratorAccess
+
+users:
+  carlos.rodriguez@nclouds.com:
+    first_name: Carlos
+    last_name: Rodriguez
+    groups:
+      - DevOps
+  cristian@nclouds.com:
+    first_name: Cristian
+    last_name: "Meoño"
+    groups:
+      - DevOps
+  miguel@nclouds.com:
+    first_name: Miguel
+    last_name: Alvarado
+    groups:
+      - DevOps
+  
