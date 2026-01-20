@@ -1,3 +1,5 @@
+assume_role_arn: arn:aws:iam::164885464039:role/terraform  # Replace with IAM Role ARN to assume
+
 groups:
   DevOps:
     description: "nClouds DevOps Team"
