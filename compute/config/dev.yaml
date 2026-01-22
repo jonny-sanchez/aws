@@ -1,0 +1,62 @@
+region: us-east-2
+assume_role_arn: arn:aws:iam::985384755074:role/terraform  # Replace with IAM Role ARN to assume
+vpc_id: vpc-xxxxxxxxxxxxxxxxx  # Replace with your VPC ID
+
+private_subnets:
+  - subnet-xxxxxxxxxxxxxxxxx  # Private subnet 1
+  - subnet-yyyyyyyyyyyyyyyyy  # Private subnet 2
+
+public_subnets:
+  - subnet-zzzzzzzzzzzzzzzzz  # Public subnet 1
+  - subnet-wwwwwwwwwwwwwwwww  # Public subnet 2
+
+tags:
+  Project: Pinulito
+  Environment: Production
+
+ec2_instances:
+  web-server:
+    ami_id: ami-0c55b159cbfafe1f0  # Amazon Linux 2 AMI (ajustar según región)
+    instance_type: t3.micro
+    storage_size: 30
+    use_elastic_ip: true
+    ingress_rules:
+      - description: "Allow HTTP"
+        from_port: 80
+        to_port: 80
+        protocol: tcp
+        cidr_blocks:
+          - 0.0.0.0/0
+      - description: "Allow HTTPS"
+        from_port: 443
+        to_port: 443
+        protocol: tcp
+        cidr_blocks:
+          - 0.0.0.0/0
+    egress_rules:
+      - description: "Allow all outbound"
+        from_port: 0
+        to_port: 0
+        protocol: "-1"
+        cidr_blocks:
+          - 0.0.0.0/0
+  
+  app-server:
+    ami_id: ami-0c55b159cbfafe1f0
+    instance_type: t3.small
+    storage_size: 50
+    use_elastic_ip: false
+    ingress_rules:
+      - description: "Allow App Port"
+        from_port: 8080
+        to_port: 8080
+        protocol: tcp
+        cidr_blocks:
+          - 10.0.0.0/8
+    egress_rules:
+      - description: "Allow all outbound"
+        from_port: 0
+        to_port: 0
+        protocol: "-1"
+        cidr_blocks:
+          - 0.0.0.0/0
