@@ -1,0 +1,21 @@
+region: "us-east-2"
+assume_role_arn: arn:aws:iam::823613469731:role/terraform
+identifier: "alisa"
+
+utility_vpc: vpc-064a1d2ac0a022d2b
+
+client_vpn_cidr: 10.252.0.0/22
+saml_provider_arn: arn:aws:iam::823613469731:saml-provider/AWS-VPN
+self_service_saml_provider_arn: arn:aws:iam::823613469731:saml-provider/AWS-SELFSERVICEVPN
+vpn_certificate_arn: arn:aws:acm:us-east-2:823613469731:certificate/bf9ff139-5132-4994-b1e9-76d8fc2cad10
+
+attached_networks:
+  pinulito-prod:
+    vpc_cidr: 
+      - 10.1.0.0/16
+    groups_with_access:
+      - 314b65c0-f051-70c9-5a6c-923f1a75978d # DevOps - SSO Group
+
+tags: 
+  Project: PinulitoVPN
+  Environment: Production

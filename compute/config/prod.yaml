@@ -13,7 +13,7 @@ public_subnets:
   - subnet-0d666e1f01b2baae4  # Public subnet 3
 
 tags:
-  Project: Pinulito
+  Project: PinulitoCompute
   Environment: Production
 
 ec2_instances:
