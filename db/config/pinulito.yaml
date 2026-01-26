@@ -1,0 +1,37 @@
+region: "us-east-2"
+identifier: "pinulito"
+profile: "pinulito-prod"
+
+kms_alias: "pinulito-sqlserver-rds"
+kms_enable_rotation: true
+
+rds_sg_name: "prod-sqlserver-rds-sg"
+
+allowed_cidr_blocks: [
+  "10.0.0.0/8"
+]
+
+allowed_security_group_ids: []
+
+db_engine          : "sqlserver-web"
+db_engine_version  : "15.00.4435.7.v1"
+
+db_instance_class  : "db.m6i.large"
+db_allocated_storage: 1000
+db_storage_type    : "gp3"
+
+db_multi_az        : false
+db_license_model   : "license-included"
+
+db_username        : "sqladmin"
+manage_master_user_password: true
+
+db_publicly_accessible: false
+
+backup_retention_period: 35
+backup_window          : "02:00-03:00"
+
+monitoring_interval: 0
+
+tags: 
+  ManagedBy: "terraform"
