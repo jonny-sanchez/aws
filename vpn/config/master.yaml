@@ -15,7 +15,7 @@ attached_networks:
       - 10.1.0.0/16
     groups_with_access:
       - 314b65c0-f051-70c9-5a6c-923f1a75978d # DevOps - SSO Group
-      - 216b1500-60c1-7003-01d4-2fde8b91e520 # VPN    - SSO Group
+      - 81fbf560-4061-70a2-a325-e342e02c5fa6 # VPN    - SSO Group
 
 tags: 
   Project: PinulitoVPN
