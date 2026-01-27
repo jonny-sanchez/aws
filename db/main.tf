@@ -34,7 +34,7 @@ resource "aws_kms_alias" "rds" {
 resource "aws_security_group" "rds" {
   name        = "${local.identifier}-sqlserver-rds-sg"
   description = "Security group for SQL Server RDS"
-  vpc_id      = "vpc-06effadad2d2271cf" #local.network.output.vpc.vpc_id
+  vpc_id      = local.network.output.vpc.vpc_id 
 
   tags = merge(
     local.config.tags,
@@ -108,9 +108,9 @@ module "rds_sql_server" {
   publicly_accessible = local.config.db_publicly_accessible
 
   vpc_security_group_ids = [aws_security_group.rds.id]
-  
+
   create_db_subnet_group = true
-  subnet_ids             = ["subnet-0dc35c80c27883d79", "subnet-08bdbfdada1f1ee42", "subnet-0ae77292cf1645d8f"] #local.network.output.vpc.database_subnets
+  subnet_ids             = local.network.output.vpc.intra_subnets 
 
   backup_retention_period = local.config.backup_retention_period
   backup_window           = local.config.backup_window

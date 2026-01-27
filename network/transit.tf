@@ -72,7 +72,7 @@ data "aws_ec2_transit_gateway" "shared_tgw" {
 # 2. Create the Attachment
 resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
   count = local.config.transit.customer.create ? 1 : 0
-  subnet_ids         = module.vpc.private_subnets # Private subnets usually
+  subnet_ids         = [module.vpc.private_subnets[0],module.vpc.public_subnets[1], module.vpc.intra_subnets[2]] # Subnets
   transit_gateway_id = data.aws_ec2_transit_gateway.shared_tgw.id
   vpc_id             = module.vpc.vpc_id
 
@@ -85,6 +85,28 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
 resource "aws_route" "send_to_tgw" {
   count = local.config.transit.customer.create ? 1 : 0
   route_table_id         = module.vpc.private_route_table_ids[0] # Your private subnet route table
+  destination_cidr_block = local.config.transit.customer.route   # The CIDR of the OTHER account's network
+  transit_gateway_id     = data.aws_ec2_transit_gateway.shared_tgw.id
+
+  depends_on = [
+    aws_ec2_transit_gateway_vpc_attachment.this[0]
+  ]
+}
+
+resource "aws_route" "send_to_tgw_public" {
+  count = local.config.transit.customer.create ? 1 : 0
+  route_table_id         = module.vpc.public_route_table_ids[0] # Your private subnet route table
+  destination_cidr_block = local.config.transit.customer.route   # The CIDR of the OTHER account's network
+  transit_gateway_id     = data.aws_ec2_transit_gateway.shared_tgw.id
+
+  depends_on = [
+    aws_ec2_transit_gateway_vpc_attachment.this[0]
+  ]
+}
+
+resource "aws_route" "send_to_tgw_intra" {
+  count = local.config.transit.customer.create ? 1 : 0
+  route_table_id         = module.vpc.intra_route_table_ids[0] # Your private subnet route table
   destination_cidr_block = local.config.transit.customer.route   # The CIDR of the OTHER account's network
   transit_gateway_id     = data.aws_ec2_transit_gateway.shared_tgw.id
 
