@@ -28,5 +28,6 @@ resource "aws_instance" "ec2" {
 
   tags = {
     Name = "ec2-${each.key}-${local.workspace_suffix}"
+    Scheduler = tostring(local.config.scheduler)
   }
 }

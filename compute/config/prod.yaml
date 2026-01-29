@@ -1,6 +1,7 @@
 region: us-east-2
 assume_role_arn: arn:aws:iam::985384755074:role/terraform  # Replace with IAM Role ARN to assume
 vpc_id: vpc-06effadad2d2271cf  # Replace with your VPC ID
+scheduler : true
 
 private_subnets:
   - subnet-0b3d45ab774dbdb5f  # Private subnet 1
