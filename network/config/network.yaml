@@ -1,0 +1,39 @@
+region: "us-east-2"
+identifier: "alisa"
+profile: "alisa-network"
+
+vpc:
+  create_vpc: true
+  cidr: "10.0.0.0/16"
+  azs: ["us-east-2a", "us-east-2b", "us-east-2c"]
+  private_subnets: ["10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24"]
+  public_subnets: ["10.0.102.0/24", "10.0.103.0/24", "10.0.104.0/24"]
+  intra_subnets: ["10.0.52.0/24", "10.0.53.0/24", "10.0.54.0/24"]
+  enable_nat_gateway: true
+  enable_vpn_gateway: false
+  single_nat_gateway: true
+  one_nat_gateway_per_az: false
+  create_flow_log_cloudwatch_iam_role: true
+  create_flow_log_cloudwatch_log_group: true
+  enable_flow_log: true
+  flow_log_file_format: "plain-text"
+
+transit:
+  network:
+    create: true
+    auto_accept_attachments: true
+    share_tgw: true
+    ram_external_principals: true
+    ram_principals:
+      - 985384755074
+    routes:
+      - "10.1.0.0/16"
+
+
+  customer: 
+    create: false
+    owner: "823613469731"
+    route: "0.0.0.0/0"
+
+tags: 
+  ManagedBy: "terraform"

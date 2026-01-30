@@ -1,0 +1,101 @@
+region: us-east-2
+assume_role_arn: arn:aws:iam::985384755074:role/terraform  # Replace with IAM Role ARN to assume
+vpc_id: vpc-06effadad2d2271cf  # Replace with your VPC ID
+scheduler : true
+
+private_subnets:
+  - subnet-0b3d45ab774dbdb5f  # Private subnet 1
+  - subnet-049b0f81997fdceb1  # Private subnet 2
+  - subnet-042a610640363618f  # Private subnet 3
+
+public_subnets:
+  - subnet-0ce8d27680eafe041  # Public subnet 1
+  - subnet-08f409ffdf13f1d1c  # Public subnet 2
+  - subnet-0d666e1f01b2baae4  # Public subnet 3
+
+tags:
+  Project: PinulitoCompute
+  Environment: Production
+
+ec2_instances:
+  web-server:
+    ami_id: ami-0b788361ab487e4e6
+    instance_type: m5.large
+    storage_size: 100
+    use_elastic_ip: true
+    ingress_rules:
+      - description: "Allow HTTP"
+        from_port: 80
+        to_port: 80
+        protocol: tcp
+        cidr_blocks:
+          - 0.0.0.0/0
+      - description: "Allow HTTPS"
+        from_port: 443
+        to_port: 443
+        protocol: tcp
+        cidr_blocks:
+          - 0.0.0.0/0
+      - description: "Allow Internal Traffic"
+        from_port: -1
+        to_port: -1
+        protocol: -1
+        cidr_blocks:
+          - "10.0.0.0/8"
+    egress_rules:
+      - description: "Allow all outbound"
+        from_port: 0
+        to_port: 0
+        protocol: "-1"
+        cidr_blocks:
+          - 0.0.0.0/0
+  sap-server:
+    ami_id: ami-0b788361ab487e4e6
+    instance_type: r5.2xlarge
+    storage_size: 500
+    use_elastic_ip: true
+    ingress_rules:
+      - description: "Allow App Port"
+        from_port: 8080
+        to_port: 8080
+        protocol: tcp
+        cidr_blocks:
+          - 10.0.0.0/8
+      - description: "Allow Internal Traffic"
+        from_port: -1
+        to_port: -1
+        protocol: -1
+        cidr_blocks:
+          - "10.0.0.0/8"
+    egress_rules:
+      - description: "Allow all outbound"
+        from_port: 0
+        to_port: 0
+        protocol: "-1"
+        cidr_blocks:
+          - 0.0.0.0/0
+  sap-db-server:
+    ami_id: ami-0b788361ab487e4e6
+    instance_type: r6i.xlarge
+    storage_size: 1000
+    use_elastic_ip: false
+    ingress_rules:
+      - description: "Allow App Port"
+        from_port: 8080
+        to_port: 8080
+        protocol: tcp
+        cidr_blocks:
+          - 10.0.0.0/8
+      - description: "Allow Internal Traffic"
+        from_port: -1
+        to_port: -1
+        protocol: -1
+        cidr_blocks:
+          - "10.0.0.0/8"
+    egress_rules:
+      - description: "Allow all outbound"
+        from_port: 0
+        to_port: 0
+        protocol: "-1"
+        cidr_blocks:
+          - 0.0.0.0/0
